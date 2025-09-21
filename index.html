@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskitos</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>Taskitos</h1>
+                <p>para sala do futuro e cmsp!</p>
+            </div>
+        </header>
+
+        <section class="section login-section">
+            <div class="login-container">
+                <button id="quickLoginBtn" class="quick-login-btn">
+                    Contas Salvas
+                    <span id="accountCount" class="badge">0</span>
+                </button>
+                <h2>Login</h2>
+                <form class="login-form">
+                    <div class="input-group">
+                        <label for="studentId">RA</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="studentId" name="studentId" placeholder="Digite seu RA" required>
+                            <button type="button" class="clear-btn">×</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Senha</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                            <button type="button" class="toggle-btn">👁</button>
+                            <button type="button" class="clear-btn">×</button>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn" id="pendingBtn">Atividades Pendentes</button>
+                        <button type="button" class="btn" id="expiredBtn">Atividades Expiradas</button>
+                        <button type="button" class="btn" id="examBtn">Provas Pendentes</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <div class="account-selector-modal hidden" id="accountSelectorModal">
+            <div class="account-selector-content">
+                <div class="account-selector-header">
+                    <h2>Selecionar Atividades</h2>
+                    <button class="close-btn">×</button>
+                </div>
+                <div class="account-selector-body">
+                    <div class="saved-accounts-list" id="savedAccountsList">
+                        <button class="btn btn-primary" id="selectAllBtn">Selecionar Todas as Atividades</button>
+                        <div class="no-accounts-message hidden">
+                            <p>Sem atividades disponíveis</p>
+                            <p class="text-muted">Tente novamente mais tarde</p>
+                        </div>
+                    </div>
+
+                    <p>Seleção de pontuação: escolha a pontuação para cada atividade. Pontuações menores podem gerar respostas incorretas em algumas questões</p>
+
+                    <div class="section">
+                        <h3>Configurações de Tempo de Estudo</h3>
+                        <div class="input-group">
+                            <label for="minStudyTime">Tempo Mínimo (minutos)</label>
+                            <input type="number" id="minStudyTime" min="0" value="5">
+                        </div>
+                        <div class="input-group">
+                            <label for="maxStudyTime">Tempo Máximo (minutos)</label>
+                            <input type="number" id="maxStudyTime" min="0" value="30">
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Configurações de Tempo</h3>
+                        <div class="input-group">
+                            <label for="minExamTime">Tempo Mínimo Prova (minutos)</label>
+                            <input type="number" id="minExamTime" min="0" value="5">
+                        </div>
+                        <div class="input-group">
+                            <label for="maxExamTime">Tempo Máximo Prova (minutos)</label>
+                            <input type="number" id="maxExamTime" min="0" value="30">
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Configurações de Pontuação</h3>
+                        <div class="input-group">
+                            <label for="scoreLevel">Nível de Pontuação</label>
+                            <select id="scoreLevel">
+                                <option value="50">50%</option>
+                                <option value="75">75% (±5%)</option>
+                                <option value="85">85% (±5%)</option>
+                                <option value="100">100%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="account-selector-footer">
+                    <button class="btn btn-primary" id="doSelectedLessonsBtn">Fazer Lições Selecionadas</button>
+                    <button class="btn" id="doSelectedLessonsDraftBtn">Fazer Lições Selecionadas como Rascunho</button>
+                    <button class="btn" id="submitSelectedExamsBtn">Enviar Provas Selecionadas</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="account-selector-modal hidden" id="processingModal">
+            <div class="account-selector-content">
+                <div class="account-selector-header">
+                    <h2>Processando Atividades</h2>
+                </div>
+                <div class="account-selector-body">
+                    <p>Preparando atividades...</p>
+                    <p>Processando <span id="processedCount">0</span> de <span id="totalCount">0</span> atividades</p>
+                    <p>Por favor, não feche esta página enquanto as atividades estão sendo processadas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="account-selector-modal hidden" id="completedModal">
+            <div class="account-selector-content">
+                <div class="account-selector-header">
+                    <h2>🎉 Atividades Concluídas!</h2>
+                    <button class="close-btn">×</button>
+                </div>
+                <div class="account-selector-body">
+                    <h3>💬</h3>
+                    <h3>Entre no nosso Discord!</h3>
+                    <p>Encontre muito mais scripts para diferentes plataformas educacionais, suporte da comunidade e novidades sobre o Taskitos.</p>
+                    <ul>
+                        <li>
+                            <span>📜</span>
+                            <p>Para Sala do Futuro, Redação, SPeak, Matific e mais</p>
+                        </li>
+                        <li>
+                            <span>❓</span>
+                            <p>Ajuda da comunidade</p>
+                        </li>
+                        <li>
+                            <span>🔔</span>
+                            <p>Atualizações e novidades</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="account-selector-footer">
+                    <button class="btn btn-primary" id="joinDiscordBtn">Entrar no Discord</button>
+                    <button class="btn btn-danger" id="dismissBtn">Agora não</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="section">
+            <p>Entre no nosso servidor do Discord</p>
+            <p><a href="https://discord.com/" target="_blank">Platform Destroyer - Discord</a></p>
+            <p>feito por cupiditys</p>
+            <p>"Taskitos" nome por prongsfav</p>
+            <p>Baseado em Doritus</p>
+        </footer>
+    </div>
+</body>
+</html>
